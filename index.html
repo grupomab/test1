@@ -7,8 +7,23 @@
 </head>
 <body>
     <h1>Precio de Cripto</h1>
-    <p id="precio"></p>
+    <p id="precio">Cargando...</p>
 
-    <script src="app.js"></script>
+    <script>
+        // Cambia "bitcoin" por el símbolo de la criptomoneda que deseas consultar
+        var criptoSymbol = "bitcoin";
+        var apiUrl = "https://api.coingecko.com/api/v3/simple/price?ids=" + criptoSymbol + "&vs_currencies=usd";
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                var precio = data[criptoSymbol].usd;
+                document.getElementById("precio").innerText = "Precio: $" + precio;
+            })
+            .catch(error => {
+                document.getElementById("precio").innerText = "Error al obtener datos";
+                console.error("Error al obtener datos:", error);
+            });
+    </script>
 </body>
 </html>
