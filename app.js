@@ -1,16 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
-  obtenerPrecioBinance();
+    // Cambia "bitcoin" por el símbolo de la criptomoneda que deseas consultar
+    var criptoSymbol = "bitcoin";
+    var apiUrl = "https://api.coingecko.com/api/v3/simple/price?ids=" + criptoSymbol + "&vs_currencies=usd";
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            var precio = data[criptoSymbol].usd;
+            document.getElementById("precio").innerText = "Precio: $" + precio;
+        })
+        .catch(error => console.error("Error al obtener datos:", error));
 });
-
-function obtenerPrecioBinance() {
-  var url = "https://api.binance.com/api/v3/ticker/price?symbol=P2PUSDT";
-
-  axios.get(url)
-    .then(function(response) {
-      var precio = response.data.price;
-      document.getElementById("precio").textContent = "Precio: " + precio + " USDT";
-    })
-    .catch(function(error) {
-      console.error("Error al obtener el precio:", error);
-    });
-}
